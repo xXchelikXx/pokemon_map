@@ -7,6 +7,8 @@ from django.shortcuts import render
 from .models import Pokemon, PokemonEntity
 from django.utils.timezone import localtime
 
+from django.http import Http404
+
 MOSCOW_CENTER = [55.751244, 37.618423]
 DEFAULT_IMAGE_URL = (
     'https://vignette.wikia.nocookie.net/pokemon/images/6/6e/%21.png/revision'
@@ -57,7 +59,11 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    requested_pokemon = Pokemon.objects.get(id=pokemon_id)
+    try:
+        requested_pokemon = Pokemon.objects.get(id=pokemon_id, title="dfgsd")
+    except Pokemon.DoesNotExist:
+        raise Http404("Покемон не найден")
+
     today_time = localtime()
     pokemon = {
         'img_url': request.build_absolute_uri(requested_pokemon.image.url),
