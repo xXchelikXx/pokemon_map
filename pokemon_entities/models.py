@@ -13,7 +13,7 @@ class Pokemon(models.Model):
         return self.title
 
 class PokemonEntity(models.Model):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name="ссылка на покемона", related_name="entites")
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name="ссылка на покемона", related_name="entities")
     lon = models.FloatField(verbose_name="долгота")
     lat = models.FloatField(verbose_name="широта")
 
